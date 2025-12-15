@@ -178,7 +178,7 @@ Cryptographic operations must be:
 #### 3.4.9 Other Domain Namespaces
 Additional namespaces (e.g., `EDI`, `JSON`, `HTTP`) must define a clear responsibility boundary and should not overlap in purpose.
 
-Namespaces such as Utilities, Helpers, or Common are discouraged and should be treated as refactoring waypoints, not architectural destinations.
+Namespaces such as `Utilities`, `Helpers`, or `Common` are discouraged and should be treated as refactoring waypoints, not architectural destinations.
 
 Poorly defined namespaces must be corrected rather than compensated for with verbose type names.
 
