@@ -7,6 +7,14 @@
 >
 > Its purpose is to ensure clarity, consistency, and long-term maintainability across a mixed-language (.NET) ecosystem, while favoring explicit design and intentional tradeoffs over trend-driven convention.
 
+## Relationship to Industry Best Practices
+
+Ichthus Development standards are based primarily on established industry best practices across software engineering, data engineering, and system design.
+
+Where this document defines deviations from commonly accepted practices, those deviations are intentional, experience-driven exceptions rather than wholesale rejections of industry guidance. Such exceptions are documented explicitly and exist to improve clarity, safety, cross-language interoperability, or long-term maintainability in real-world systems.
+
+These standards apply to application code, libraries, APIs, data pipelines, and database artifacts produced under Ichthus Development.
+
 ---
 
 ## 1. Guiding Principles
@@ -30,33 +38,45 @@ These principles override tooling trends, framework fashion, and external style 
 
 ---
 
-## 2. Language Usage (VB.NET and C#)
+## 2. Terminology and Rule Severity
+
+The following terms are used throughout this document:
+
+- **MUST** — A mandatory requirement. Violations are considered defects.
+- **SHOULD** — A strong recommendation. Deviations require justification.
+- **MAY** — An optional guideline. Context-dependent.
+
+These terms are used intentionally to enable future mechanical enforcement through tooling and to remove ambiguity during code review.
+
+---
+
+## 3. Language Usage (VB.NET and C#)
 
 Ichthus Development intentionally mixes **VB.NET** and **C#** within the same solution space.
 
-### 2.1 Why VB.NET Exists Here
+### 3.1 Why VB.NET Exists Here
 
 - Mature, expressive syntax for domain modeling
 - Strong readability for business logic and data-heavy code
 - Deep familiarity and long-term maintainability
 
-### 2.2 Why C# Exists Here
+### 3.2 Why C# Exists Here
 
 - Broader ecosystem expectations
 - Third-party library interoperability
 - Modern tooling support
 
-### 2.3 Cross-Language Rule
+### 3.3 Cross-Language Rule
 
 > **All public APIs must look natural, intentional, and idiomatic when consumed from both VB.NET and C#.**
 
-Language-specific features must not leak into shared contracts.
+Language-specific features must not leak into shared contracts or public abstractions.
 
 ---
 
-## 3. Namespace and Project Structure
+## 4. Namespace and Project Structure
 
-### 3.1 Root Namespace Policy (VB.NET)
+### 4.1 Root Namespace Policy (VB.NET)
 
 - **VB.NET Root Namespace is always blank**
 - All namespaces are declared explicitly in code
@@ -68,7 +88,7 @@ Rationale:
 
 ---
 
-### 3.2 Core Namespaces
+### 4.2 Core Namespaces
 
 Namespaces ending in `.Core` represent:
 
@@ -89,7 +109,7 @@ Ichthus.Text.JSON.Core
 
 ---
 
-### 3.3 Namespace Stability and Versioning
+### 4.3 Namespace Stability and Versioning
 
 Namespaces are treated as part of the public API surface.
 
@@ -103,18 +123,18 @@ Rationale:
 - Consumers bind to namespaces implicitly through imports/usings
 - Treating namespaces as disposable leads to silent downstream breakage
 
-### 3.4 Namespace Semantics
+### 4.4 Namespace Semantics
 
 Certain namespaces within Ichthus carry **architectural meaning**, not just organizational grouping.
 
 These namespaces communicate responsibility and intent and must be used consistently.
 
-#### 3.4.1 `Core`
+#### 4.4.1 `Core`
 - Dependency-safe contracts
 - Stable domain abstractions
 - No external or implementation-specific dependencies
 
-#### 3.4.2 `IO`
+#### 4.4.2 `IO`
 - Stream-based or persistence-oriented operations
 - Files, sockets, buffers, or durable data sinks/sources
 - Implies seek/read/write semantics
@@ -124,7 +144,7 @@ Examples:
 - Network streams
 - Memory-backed buffers
 
-#### 3.4.3 `Console`
+#### 4.4.3 `Console`
 - Interactive, presentation-oriented output
 - Human-facing input/output
 - Not assumed to be durable or stream-seekable
@@ -134,14 +154,14 @@ Examples:
 - Menu systems
 - Interactive prompts
 
-#### 3.4.4 `Diagnostics`
+#### 4.4.4 `Diagnostics`
 - Structured reporting of non-fatal conditions, validation issues, and system observations
 - Not responsible for presentation or persistence
 - May be consumed by logging, UI, telemetry, or test harnesses
 
 Diagnostics represent facts; interpretation is the responsibility of the consumer.
 
-#### 3.4.5 `Text`
+#### 4.4.5 `Text`
 - Textual data handling, parsing, tokenization, and transformation
 - Format-aware but transport-agnostic
 - Does not imply persistence, IO, or UI concerns
@@ -151,21 +171,21 @@ Examples:
 - Tokenizers
 - Format grammars
 
-#### 3.4.6 `Policies`
+#### 4.4.6 `Policies`
 - Behavioral rules and decision models
 - No execution logic
 - Used to influence how other components behave
 
 Policies define *what should happen*, not *how it happens*.
 
-#### 3.4.7 `Security`
+#### 4.4.7 `Security`
 - Security-sensitive utilities and abstractions
 - Explicit, opt-in usage
 - No silent encryption, hashing, or obfuscation
 
 All security behavior must be visible at the call site.
 
-#### 3.4.8 `Cryptography`
+#### 4.4.8 `Cryptography`
 - Cryptographic primitives and transformations
 - Explicit encryption, decryption, signing, verification, and hashing operations
 - No implicit key management, storage, or policy decisions
@@ -175,7 +195,7 @@ Cryptographic operations must be:
 - Opt-in
 - Transparent in intent
 
-#### 3.4.9 Other Domain Namespaces
+#### 4.4.9 Other Domain Namespaces
 Additional namespaces (e.g., `EDI`, `JSON`, `HTTP`) must define a clear responsibility boundary and should not overlap in purpose.
 
 Namespaces such as `Utilities`, `Helpers`, or `Common` are discouraged and should be treated as refactoring waypoints, not architectural destinations.
@@ -184,9 +204,9 @@ Poorly defined namespaces must be corrected rather than compensated for with ver
 
 ---
 
-## 4. Naming Conventions
+## 5. Naming Conventions
 
-### 4.1 Acronyms and Initialisms
+### 5.1 Acronyms and Initialisms
 
 **All acronyms are written in ALL CAPS.**
 
@@ -211,7 +231,7 @@ Incorrect:
 
 ---
 
-### 4.2 General Naming Rules
+### 5.2 General Naming Rules
 
 - Public members: **PascalCase**
 - No camelCase for public APIs
@@ -220,14 +240,22 @@ Incorrect:
 
 ---
 
-### 4.3 Constants
+### 5.3 Constants
 
 - Constants are declared using **SCREAMING_SNAKE_CASE**
 
 Example:
 
+**VB.NET**
+
 ```vbnet
 Public Const MAX_RETRY_COUNT As Integer = 5
+```
+
+**C#**
+
+```csharp
+public const int MAX_RETRY_COUNT = 5;
 ```
 
 Rationale:
@@ -236,7 +264,7 @@ Rationale:
 
 ---
 
-### 4.4 Internal vs External Serialization Conventions
+### 5.4 Internal vs External Serialization Conventions
 
 - Internal models should follow Ichthus naming conventions (PascalCase, ALL-CAPS acronyms).
 - External serialization formats (e.g., JSON for public APIs) may adapt naming conventions as required for interoperability.
@@ -247,11 +275,11 @@ Rationale:
 
 ---
 
-### 4.5 Domain-Oriented Naming and Namespace Responsibility
+### 5.5 Domain-Oriented Naming and Namespace Responsibility
 
 Ichthus Development favors **domain-oriented namespaces** over redundant type prefixes.
 
-#### 4.5.1 Namespace Carries Semantic Weight
+#### 5.5.1 Namespace Carries Semantic Weight
 
 When a type exists within a clearly defined domain namespace, **the namespace—not the type name—carries the primary semantic meaning**.
 
@@ -259,16 +287,37 @@ Redundant repetition of the domain name in type identifiers is discouraged.
 
 Example:
 
+**VB.NET**
+
 ```vbnet
 Namespace Ichthus.EDI
     Public Interface IDelimiterDetector
 End Namespace
 ```
 
+**C#**
+
+```csharp
+namespace Ichthus.EDI
+{
+    public interface IDelimiterDetector
+    {
+    }
+}
+```
+
 Preferred usage:
+
+**VB.NET**
 
 ```vbnet
 Dim detector As IDelimiterDetector
+```
+
+**C#**
+
+```csharp
+IDelimiterDetector detector;
 ```
 
 Avoid:
@@ -285,11 +334,13 @@ Rationale:
 
 ---
 
-#### 4.5.2 When Domain Prefixes Are Acceptable
+#### 5.5.2 When Domain Prefixes Are Acceptable
 
 Domain prefixes may be retained only when the concept itself is cross-domain or taxonomy-like, and may reasonably appear outside its defining namespace.
 
 Example:
+
+**VB.NET**
 
 ```vbnet
 Public Enum EDIFormat
@@ -297,6 +348,17 @@ Public Enum EDIFormat
     X12
     EDIFACT
 End Enum
+```
+
+**C#**
+
+```csharp
+public enum EDIFormat
+{
+    Unknown,
+    X12,
+    EDIFACT
+}
 ```
 
 Rationale:
@@ -308,7 +370,7 @@ This exception is intentional and limited.
 
 ---
 
-#### 4.5.3 Explicit Qualification Over Renaming
+#### 5.5.3 Explicit Qualification Over Renaming
 
 When name collisions occur across domains (e.g., `Writer`, `Reader`, `Parser`), explicit qualification or aliasing is preferred over renaming types.
 
@@ -338,7 +400,7 @@ Rationale:
 
 ---
 
-#### 4.5.4 Design Implication
+#### 5.5.4 Design Implication
 
 This convention places higher importance on namespace architecture.
 
@@ -351,12 +413,12 @@ As a result:
 
 ---
 
-## 5. Code Structure & Architectural Preferences
+## 6. Code Structure & Architectural Preferences
 
-### 5.1 Variable Declaration Style
+### 6.1 Variable Scope and Declaration Placement
 
 - Local variables should be declared at the beginning of a method whenever practical.
-- Variables scoped to blocks may be declared early and initialized to `Nothing` or an empty value.
+- Variables scoped to blocks may be declared early and initialized to `Nothing` or an empty value when doing so improves readability.
 - Exceptions are permitted when early returns prevent unnecessary allocation.
 
 Rationale:
@@ -365,7 +427,22 @@ Rationale:
 
 ---
 
-### 5.2 Data Access and Object Design
+### 6.2 Type Safety and Explicit Typing
+
+- Variables MUST be declared using the most specific, meaningful type available.
+- Avoid using generic or ambiguous types (e.g., `Object`) when a concrete type exists.
+- In C#, use of `var` SHOULD be limited to cases where the inferred type is immediately obvious and improves readability.
+- In VB.NET, implicit typing that results in `Object` MUST be avoided.
+
+Exceptions are permitted only when:
+- Required by reflection or late binding
+- Imposed by external APIs or frameworks
+
+Such exceptions MUST be documented inline with rationale.
+
+---
+
+### 6.3 Data Access and Object Design
 
 - Centralized data access patterns are preferred.
 - Lazy-loaded properties are acceptable when they improve performance or clarity.
@@ -375,25 +452,35 @@ Rationale:
 
 ---
 
-### 5.3 Type Semantics
+### 6.4 Type Semantics
 
 - Prefer rich types (e.g., `FileInfo`) over primitive representations (e.g., file paths as strings) when behavior matters.
 
 ---
 
-### 5.4 Server-Side Technology Preference
+### 6.5 Server-Side Technology Preference
 
 - ASP.NET is the preferred platform for server-side logic and validation.
 - Other technologies may be used only when constraints require it.
 
 ---
 
-## 6. Code Documentation
+## 7. Code Documentation and Commenting
 
-### 6.1 XML Documentation Comments
+### 7.1 XML Documentation Comments
 
 - XML documentation comments are required for all public types and members
 - Internal members should be documented where intent is not obvious
+
+XML documentation comments SHOULD make use of:
+- `<summary>` to describe intent
+- `<param>` to explain parameter purpose
+- `<returns>` where applicable
+- `<remarks>` for constraints or edge cases
+- `<seealso>` and `<cref>` for related types or specifications
+- `<langword>` for language keywords
+
+Documentation should explain *why a construct exists*, not merely restate syntax.
 
 Rationale:
 - Improves IntelliSense across languages
@@ -402,7 +489,21 @@ Rationale:
 
 ---
 
-### 6.2 Comment Philosophy
+### 7.2 Inline Comments
+
+Inline comments are reserved for:
+- Explaining non-obvious intent
+- Documenting deliberate deviations
+- Clarifying constraints imposed by external systems
+
+Inline comments MUST NOT:
+- Restate obvious code behavior
+- Duplicate XML documentation
+- Serve as a substitute for clear naming or structure
+
+---
+
+### 7.3 Comment Philosophy
 
 - Comments should explain why, not what
 - Redundant comments are discouraged
@@ -410,9 +511,9 @@ Rationale:
 
 ---
 
-## 7. Code Organization
+## 8. Code Organization
 
-### 7.1 `#Region` (VB.NET) and `#region` (C#) Usage
+### 8.1 `#Region` (VB.NET) and `#region` (C#) Usage
 
 - `#Region` blocks are used intentionally to organize:
   - Public properties
@@ -429,9 +530,9 @@ Rationale:
 
 ---
 
-## 8. Error Handling and Diagnostics
+## 9. Error Handling and Diagnostics
 
-### 8.1 Diagnostics over Exceptions
+### 9.1 Diagnostics over Exceptions
 
 Libraries should:
 - Prefer structured diagnostics over throwing exceptions
@@ -449,7 +550,7 @@ This allows:
 
 ---
 
-### 8.2 Severity Model
+### 9.2 Severity Model
 
 Diagnostics use a shared severity model:
 - Information
@@ -462,7 +563,7 @@ Severity models should be consistent across all Ichthus projects.
 
 ---
 
-## 9. UI Separation
+## 10. UI Separation
 
 Rules:
 - No UI code in Core or shared libraries
@@ -476,7 +577,7 @@ Rationale:
 
 ---
 
-## 10. Data Handling Philosophy
+## 11. Data Handling Philosophy
 
 - Prefer immutable or read-only data structures where practical
 - Preserve raw input alongside parsed or transformed representations
@@ -484,7 +585,7 @@ Rationale:
 
 ---
 
-## 11. Conscious Deviations from Common Best Practices
+## 12. Conscious Deviations from Common Best Practices
 
 As defined above, Ichthus Development intentionally deviates from some mainstream .NET conventions.
 
@@ -508,7 +609,54 @@ These choices exist to improve:
 
 ---
 
-## 12. Living Document
+## 13. SQL and Database Development Standards
+
+SQL is treated as a first-class programming language and is subject to the same clarity and maintainability standards as application code.
+
+### 13.1 Formatting and Readability
+
+- SQL keywords MUST be written in UPPERCASE.
+- Major clauses (`SELECT`, `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`) MUST begin on new lines.
+- Each selected column SHOULD appear on its own line.
+- Logical conditions SHOULD be vertically aligned for readability.
+
+### 13.2 Identifier Naming and Quoting
+
+- Object names MUST be descriptive and domain-relevant.
+- Avoid cryptic abbreviations unless they are domain-standard.
+- Mixed-case or reserved identifiers MUST be quoted according to the target dialect:
+  - PostgreSQL: `"Identifier"`
+  - SQL Server: `[Identifier]`
+
+Do not rely on implicit case folding or engine-specific quirks.
+
+### 13.3 Schema Design and Evolution
+
+- Database schema is considered part of the public contract.
+- Prefer additive, non-destructive schema changes.
+- Breaking changes MUST be intentional and documented.
+
+### 13.4 Query Intent
+
+- Prefer clarity over cleverness.
+- Use Common Table Expressions (CTEs) when they improve readability.
+- Avoid deeply nested queries that obscure intent.
+
+---
+
+## 14. Enforceability and Tooling Alignment
+
+These standards are written with the expectation that they can be enforced through tooling where feasible (e.g., static analyzers, linters, CI validation).
+
+Manual enforcement alone is considered insufficient for long-term consistency.
+
+Where mechanical enforcement is not yet available, standards remain normative and are enforced through review.
+
+Tooling enforcement does not replace human judgment but is intended to support consistency and early feedback.
+
+---
+
+## 15. Living Document
 
 This document is expected to evolve.
 
@@ -527,4 +675,4 @@ This documentation is licensed under the Creative Commons Attribution 4.0 Intern
 
 _Ichthus Engineering Standards exist to serve understanding, not fashion._
 
-© Ichthus Development
+© Gold Fish Bowl, LLC - DBA Ichthus Development
