@@ -50,6 +50,11 @@ The following terms are used throughout this document:
 
 These terms are used intentionally to enable future mechanical enforcement through tooling and to remove ambiguity during code review.
 
+Lowercase must / should / may are descriptive prose only.  
+Uppercase MUST / SHOULD / MAY define enforceable rules.
+
+Use of the term "preferred" indicates a strong default, not a prohibition.
+
 ---
 
 ## 3. Language Usage (VB.NET and C#)
@@ -70,9 +75,9 @@ Ichthus Development intentionally mixes **VB.NET** and **C#** within the same so
 
 ### 3.3 Cross-Language Rule
 
-> **All public APIs must look natural, intentional, and idiomatic when consumed from both VB.NET and C#.**
+> **All public APIs MUST look natural, intentional, and idiomatic when consumed from both VB.NET and C#.**
 
-Language-specific features must not leak into shared contracts or public abstractions.
+Language-specific features MUST NOT leak into shared contracts or public abstractions.
 
 ---
 
@@ -99,9 +104,9 @@ Namespaces ending in `.Core` represent:
 - Interfaces and abstractions intended for long-term stability
 
 Rules:
-- `*.Core` **must not** depend on non-Core namespaces
-- Implementations may depend on Core
-- Core namespaces should be safe to reference from any project
+- `*.Core` MUST NOT depend on non-Core namespaces
+- Implementations MAY depend on Core
+- Core namespaces SHOULD be safe to reference from any project
 
 Example:
 
@@ -116,7 +121,7 @@ Ichthus.Text.JSON.Core
 Namespaces are treated as part of the public API surface.
 
 Rules:
-- Public namespaces must be considered stable once released
+- Public namespaces MUST be considered stable once released
 - Moving a public type to a different namespace is a breaking change
 - Namespace refactors require explicit versioning or migration strategy
 
@@ -132,11 +137,13 @@ Certain namespaces within the Ichthus root namespace carry **architectural meani
 These namespaces communicate responsibility and intent and must be used consistently.
 
 #### 4.4.1 `Core`
+
 - Dependency-safe contracts
 - Stable domain abstractions
 - No external or implementation-specific dependencies
 
 #### 4.4.2 `IO`
+
 - Stream-based or persistence-oriented operations
 - Files, sockets, buffers, or durable data sinks/sources
 - Implies seek/read/write semantics
@@ -147,6 +154,7 @@ Examples:
 - Memory-backed buffers
 
 #### 4.4.3 `Console`
+
 - Interactive, presentation-oriented output
 - Human-facing input/output
 - Not assumed to be durable or stream-seekable
@@ -157,6 +165,7 @@ Examples:
 - Interactive prompts
 
 #### 4.4.4 `Diagnostics`
+
 - Structured reporting of non-fatal conditions, validation issues, and system observations
 - Not responsible for presentation or persistence
 - May be consumed by logging, UI, telemetry, or test harnesses
@@ -164,6 +173,7 @@ Examples:
 Diagnostics represent facts; interpretation is the responsibility of the consumer.
 
 #### 4.4.5 `Text`
+
 - Textual data handling, parsing, tokenization, and transformation
 - Format-aware but transport-agnostic
 - Does not imply persistence, IO, or UI concerns
@@ -174,6 +184,7 @@ Examples:
 - Format grammars
 
 #### 4.4.6 `Policies`
+
 - Behavioral rules and decision models
 - No execution logic
 - Used to influence how other components behave
@@ -181,6 +192,7 @@ Examples:
 Policies define *what should happen*, not *how it happens*.
 
 #### 4.4.7 `Security`
+
 - Security-sensitive utilities and abstractions
 - Explicit, opt-in usage
 - No silent encryption, hashing, or obfuscation
@@ -188,6 +200,7 @@ Policies define *what should happen*, not *how it happens*.
 All security behavior must be visible at the call site.
 
 #### 4.4.8 `Cryptography`
+
 - Cryptographic primitives and transformations
 - Explicit encryption, decryption, signing, verification, and hashing operations
 - No implicit key management, storage, or policy decisions
@@ -198,6 +211,7 @@ Cryptographic operations must be:
 - Transparent in intent
 
 #### 4.4.9 Other Domain Namespaces
+
 Additional namespaces (e.g., `EDI`, `JSON`, `HTTP`) must define a clear responsibility boundary and should not overlap in purpose.
 
 Namespaces such as `Utilities`, `Helpers`, or `Common` are discouraged and should be treated as refactoring waypoints, not architectural destinations.
@@ -484,6 +498,10 @@ XML documentation comments SHOULD make use of:
 
 Documentation should explain *why a construct exists*, not merely restate syntax.
 
+When documentation requires multiple conceptual paragraphs, `<para>` elements SHOULD be used instead of relying on line breaks or formatting conventions.
+
+This ensures consistent rendering across IDEs and preserves semantic structure in generated documentation.
+
 Rationale:
 - Improves IntelliSense across languages
 - Serves as living documentation
@@ -622,6 +640,8 @@ SQL is treated as a first-class programming language and is subject to the same 
 - Each selected column SHOULD appear on its own line.
 - Logical conditions SHOULD be vertically aligned for readability.
 
+---
+
 ### 13.2 Identifier Naming and Quoting
 
 - Object names MUST be descriptive and domain-relevant.
@@ -632,17 +652,32 @@ SQL is treated as a first-class programming language and is subject to the same 
 
 Do not rely on implicit case folding or engine-specific quirks.
 
+---
+
 ### 13.3 Schema Design and Evolution
 
 - Database schema is considered part of the public contract.
 - Prefer additive, non-destructive schema changes.
 - Breaking changes MUST be intentional and documented.
 
+---
+
 ### 13.4 Query Intent
 
 - Prefer clarity over cleverness.
 - Use Common Table Expressions (CTEs) when they improve readability.
 - Avoid deeply nested queries that obscure intent.
+
+---
+
+### 13.5 SQL Location and Ownership
+
+- Schema and migration SQL is authoritative and versioned
+- Ad-hoc SQL in application code SHOULD be minimized
+- Complex queries SHOULD be named, documented, or externalized
+
+Rationale:  
+SQL is code and deserves the same review, ownership, and traceability.
 
 ---
 
@@ -655,6 +690,46 @@ Manual enforcement alone is considered insufficient for long-term consistency.
 Where mechanical enforcement is not yet available, standards remain normative and are enforced through review.
 
 Tooling enforcement does not replace human judgment but is intended to support consistency and early feedback.
+
+Tooling enforcement supports these standards but does not override documented design intent or architectural judgment.
+
+### 14.1 Disabling and Suppressing Compiler Messages
+
+Compiler warning suppression via `#Disable Warning` (VB.NET) or `#pragma warning disable` (C#) is disallowed.
+
+Blanket or scope-based suppression obscures intent, hides future regressions, and undermines tooling effectiveness.
+
+When a warning must be suppressed intentionally, targeted suppression via language-supported attributes (e.g., `<SuppressMessage>` / `[SuppressMessage]`) MAY be used only when:
+
+- The specific rule being suppressed is named
+- The suppression scope is limited to the smallest applicable symbol
+- A clear justification is provided explaining why the rule does not apply
+
+Suppressions without documented rationale are considered defects.
+
+This follows the same principle as explicit typing rules (Section 6.2): tooling must not be silenced to compensate for unclear design.
+
+---
+
+### 14.2 Debugger and IntelliSense Visibility Attributes
+
+Attributes that influence debugger stepping or IntelliSense visibility (e.g., `<DebuggerStepThrough>`, `<EditorBrowsable>`, `<DebuggerBrowsable>`) MAY be used when they improve developer ergonomics without obscuring intent or correctness.
+
+Such attributes are permitted only when:
+
+- The underlying code is correct, well-tested, and intentional
+- The attribute reduces noise rather than hiding complexity
+- The member remains inspectable through source or reflection when necessary
+
+> **Note:** In this context, "well-tested" implies the behavior has been verified through unit tests, integration tests, or long-standing production stability.
+
+These attributes MUST NOT be used to:
+
+- Conceal poorly designed APIs
+- Hide complex or non-obvious logic
+- Avoid addressing legitimate tooling warnings or design issues
+
+When applied, the rationale for altering debugger or IntelliSense visibility SHOULD be evident from the surrounding context or documented inline if non-obvious.
 
 ---
 
@@ -675,6 +750,6 @@ This documentation is licensed under the Creative Commons Attribution 4.0 Intern
 
 ---
 
-_Ichthus Development Engineering and Coding Standards exist to serve understanding, not fashion._
+*Ichthus Development Engineering and Coding Standards exist to serve understanding, not fashion.*
 
-© Gold Fish Bowl, LLC - DBA Ichthus Development
+© Gold Fish Bowl, LLC, DBA Ichthus Development
