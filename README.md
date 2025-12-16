@@ -429,6 +429,54 @@ As a result:
 
 ---
 
+### 5.6 UI Control Naming Conventions (WinForms Only)
+
+For Windows Forms applications, Ichthus Development adopts explicit control-prefix naming conventions.
+
+This convention is **intentionally scoped to WinForms** and does not apply to WPF, MAUI, Blazor, or web-based UI frameworks.
+
+#### Rationale
+
+WinForms relies heavily on:
+- Event-handler wiring
+- Partial classes
+- Designer-generated code
+
+Prefix-based control naming:
+- Improves discoverability of event handlers
+- Makes control intent obvious when navigating code
+- Reduces ambiguity in large forms with many controls
+- Speeds up maintenance in legacy or mixed-era codebases
+
+#### Convention
+
+Controls SHOULD be prefixed according to their concrete type:
+
+| Control Type | Prefix Example |
+|-------------|----------------|
+| `TextBox` | `txtUserName` |
+| `Label` | `lblStatus` |
+| `Button` | `cmdSubmit` |
+| `CheckBox` | `chkIsEnabled` |
+| `RadioButton` | `radOptionA` |
+| `ComboBox` | `cboCountry` |
+| `DataGridView` | `dgvResults` |
+| `ListBox` | `lstItems` |
+| `Panel` | `pnlMain` |
+| `GroupBox` | `grpOptions` |
+
+Prefixes MUST reflect the actual control type, not semantic intent.
+
+#### Scope and Limitations
+
+- This convention MUST NOT be applied outside WinForms.
+- It MUST NOT be emulated in WPF, MAUI, Blazor, or XAML-based UI frameworks.
+- Semantic naming without prefixes is preferred in modern UI frameworks that support strong binding and declarative layouts.
+
+This convention exists to improve maintainability in WinForms, not to impose legacy patterns on modern UI development.
+
+---
+
 ## 6. Code Structure & Architectural Preferences
 
 ### 6.1 Variable Scope and Declaration Placement
