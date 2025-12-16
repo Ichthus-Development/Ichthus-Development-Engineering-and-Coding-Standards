@@ -75,7 +75,7 @@ Ichthus Development intentionally mixes **VB.NET** and **C#** within the same so
 
 ### 3.3 Cross-Language Rule
 
-> **All public APIs MUST look natural, intentional, and idiomatic when consumed from both VB.NET and C#.**
+All public APIs MUST look natural, intentional, and idiomatic when consumed from both VB.NET and C#.
 
 Language-specific features MUST NOT leak into shared contracts or public abstractions.
 
