@@ -38,6 +38,13 @@ These principles override tooling trends, framework fashion, and external style 
 5. **Tooling serves the developer—not the reverse**  
    IDEs, analyzers, and frameworks must not dictate architectural correctness.
 
+6. **Tool-Independent Readability**  
+   Code should be readable and understandable without reliance on IDE features such as syntax highlighting, IntelliSense, or visual designers.
+
+   Naming conventions, formatting, and structure are chosen to preserve semantic clarity when viewed in plain text editors or minimal environments.
+
+   Tooling may enhance productivity, but it must not be required to understand intent.
+
 ---
 
 ## 2. Terminology and Rule Severity
