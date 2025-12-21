@@ -1,6 +1,8 @@
 <p align="right"><img width="120" height="96" alt="Ichthus Development logo" src="https://github.com/user-attachments/assets/acf27b44-5bb3-474c-ac0b-3d4ac58d9bbe" /></p>
 
-# Ichthus Development Coding Conventions & Design Rationale
+# Ichthus Development Engineering and Coding Standards
+
+*Coding Conventions, Architectural Standards, and Design Rationale*
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
