@@ -58,6 +58,23 @@ These standards do not attempt to:
 
 Unless a project documents a stricter migration requirement, these standards apply prospectively to new work and to existing code when that code is materially modified.
 
+## Document Families
+
+Some standards cover broad domains whose responsibilities, review needs, and rates of change differ enough to justify companion documents. Such standards MAY be organized as a **document family**.
+
+A document family MUST have a stable root document that defines its shared scope, baseline requirements, navigation, and relationship to the rest of these standards. Companion documents MUST each own a distinct area of detailed guidance, and each normative rule SHOULD have one authoritative home rather than being duplicated across the family.
+
+Document families SHOULD be used when one or more of the following are true:
+
+- The subject contains distinct engineering responsibilities that can be reviewed or adopted independently.
+- Different parts of the subject require different expertise or evolve at materially different rates.
+- A single document has become difficult to navigate or maintain without improving conceptual unity.
+- Projects commonly need to reference one focused part of the standard without consuming the entire subject.
+
+Companion documents use local section numbering. Their section numbers identify structure within that document; they do not imply a global reconstruction of an earlier monolithic standard.
+
+The root document remains the canonical entry point for the family. Cross-document references SHOULD use document names and links rather than depending on section numbers outside the referenced document.
+
 ## Document Guide
 
 Each document owns a defined area of responsibility. A rule should have one authoritative home; related documents link to that rule rather than restating it.
@@ -81,6 +98,10 @@ Defines cross-language expectations for readable source text and identifies form
 ### [Data Format Standards](data-formats.md)
 
 Defines serialization, parsing, raw-input preservation, normalization, external naming, and traceability to external specifications.
+
+### [Compliance and Sensitive Data Standards](compliance-and-sensitive-data.md)
+
+Defines baseline engineering expectations for PHI, PII, regulated data, confidential business data, credentials, secrets, audit-sensitive records, copyrighted materials, and compliance-aware system design. This document does not provide legal advice or certify compliance, but requires sensitive-data and regulatory context to be identified and handled intentionally.
 
 ### [Approved Libraries and Dependencies](approved-libraries.md)
 
