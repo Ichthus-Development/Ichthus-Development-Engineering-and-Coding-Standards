@@ -81,7 +81,7 @@ Each document owns a defined area of responsibility. A rule should have one auth
 
 ### [Engineering Principles](principles.md)
 
-Defines the shared philosophy and architectural expectations governing all other standards, including rule terminology, public APIs, diagnostics, conscious deviations, enforcement, and evolution.
+Defines the shared philosophy and architectural expectations governing all other standards, including rule terminology, public APIs, diagnostics, proportional resource use, conscious deviations, enforcement, and evolution.
 
 ### [.NET Standards](dotnet.md)
 
