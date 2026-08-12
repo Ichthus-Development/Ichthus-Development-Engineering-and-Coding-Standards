@@ -28,6 +28,11 @@ These principles override tooling trends, framework fashion, and external style 
 
    This principle informs [.NET naming and documentation](dotnet.md) and [SQL standards](sql.md).
 
+7. **Resource use follows delivered value**
+   Spend resources in proportion to the value currently being delivered.
+
+   Idle software should be substantially idle.
+
 These standards are informed by the principles articulated in the Gold Fish Bowl Babbagic Code.
 
 ## Terminology and Rule Severity
@@ -46,6 +51,74 @@ Uppercase MUST / SHOULD / MAY define enforceable rules.
 Usage of the terms "preferred" and "discouraged" indicate a strong default, not a prohibition.
 
 For the purposes of this document, "public API" refers to any type, member, schema, or contract intended for consumption outside its defining assembly, project, or bounded context.
+
+## Resource Efficiency
+
+Ichthus Development software MUST NOT become bloatware. Features do not justify unnecessary or disproportionate consumption of CPU time, memory, storage, network bandwidth, battery power, startup time, or background processes.
+
+Resource use MUST be proportional to the value currently being delivered. This standard applies to all Ichthus Development software and applies especially to long-running agents, services, tray applications, schedulers, daemons, background processors, and client software that remains resident for extended periods.
+
+### Idle and Steady-State Behavior
+
+Idle software should be substantially idle.
+
+- Software that is not performing useful work SHOULD consume negligible CPU time and network bandwidth.
+- Idle or steady-state software SHOULD NOT continually read or write storage, wake the processor, refresh unchanged state, or perform work whose result is not currently needed.
+- Unusually high steady-state or idle resource consumption MUST be treated as a defect requiring investigation unless a concrete functional reason is documented.
+- Features MUST be evaluated for startup, idle, and steady-state resource cost in addition to functional correctness and peak-load behavior.
+- Resource measurements SHOULD be taken under representative conditions when the cost cannot be established reasonably through inspection.
+
+### Background and Resident Work
+
+Background activity MUST have a concrete, documented purpose.
+
+This requirement applies to background services, polling loops, indexing, telemetry, synchronization, inventory, caches, queues, schedulers, watchers, helper processes, and permanently resident components.
+
+- A background or resident process MUST NOT exist solely because it may be convenient for a possible future feature.
+- Unnecessary startup applications, tray processes, helper processes, background workers, and permanently loaded modules MUST be avoided.
+- Expensive or infrequently used capabilities SHOULD be activated on demand rather than kept continuously active.
+- Heavyweight components SHOULD be loaded only when their capability is needed where practical.
+- Background work SHOULD stop, suspend, or reduce its frequency when its purpose is no longer active.
+- The lifetime, trigger, frequency, ownership, and shutdown behavior of significant background work SHOULD be explicit and reviewable.
+
+### Events, Polling, and Scheduling
+
+Event-driven behavior SHOULD be preferred over frequent polling when the relevant platform and data source provide a practical event mechanism.
+
+Polling MAY be used when events are unavailable, unreliable, disproportionately complex, or inconsistent with an external contract. When polling is used:
+
+- The interval MUST be appropriate to the actual timeliness requirement.
+- The implementation SHOULD use backoff, coalescing, change detection, or suspension where those techniques reduce unnecessary work.
+- Polling MUST NOT run more frequently merely to create the appearance of responsiveness.
+- The reason for polling and the selected frequency SHOULD be documented when the resource cost is material or non-obvious.
+
+### Bounded State and Data Collection
+
+Software MUST NOT collect or maintain data merely because it might someday be useful.
+
+- Collected and retained data MUST serve a current, documented functional, operational, contractual, or legal purpose.
+- Background queues, caches, buffers, indexes, temporary data, diagnostic collections, and retained histories MUST be bounded by size, age, count, or another enforceable limit.
+- Limit behavior MUST be intentional. Systems SHOULD define what is discarded, compacted, persisted, delayed, rejected, or surfaced diagnostically when a bound is reached.
+- Caches MUST have a justified purpose and SHOULD be removable or reconstructible unless they are explicitly part of the durable data model.
+- Telemetry and inventory collection MUST be scoped to information that is actively needed and MUST comply with the [Compliance and Sensitive Data Standards](compliance-and-sensitive-data.md).
+
+### Frameworks, Dependencies, and Feature Cost
+
+Frameworks and dependencies MUST be proportionate to the problem they solve.
+
+- Disproportionately heavy frameworks, runtimes, services, or dependencies SHOULD NOT be introduced for trivial functionality when a simpler reasonable alternative exists.
+- Dependency evaluation SHOULD consider runtime memory, startup cost, deployment size, background behavior, transitive components, and operational overhead in addition to developer convenience.
+- A feature that requires continuous resource consumption MUST justify that continuous cost; the existence of the feature alone is not sufficient justification.
+- Optional features SHOULD NOT impose substantial startup, resident-memory, storage, network, or background-processing cost on users who do not use them.
+
+### Meaningful Optimization
+
+Resource-conscious design MUST NOT devolve into premature micro-optimization.
+
+- Engineering effort SHOULD focus on measured, observed, or reasonably foreseeable costs that materially affect users, systems, operations, or scalability.
+- Maintainability, clarity, correctness, accessibility, security, and diagnostics MUST NOT be sacrificed for negligible resource savings.
+- Simpler implementation SHOULD be preferred when competing approaches have no material resource difference.
+- Optimization that adds complexity SHOULD be supported by measurement, a documented constraint, or a clear operational requirement.
 
 ## Data Access and Object Design
 
@@ -170,4 +243,3 @@ Changes must:
 - Be applied consistently across all Ichthus Development projects
 
 [Return to the document guide](README.md#document-guide)
-
