@@ -103,6 +103,10 @@ Defines serialization, parsing, raw-input preservation, normalization, external 
 
 Defines baseline engineering expectations for PHI, PII, regulated data, confidential business data, credentials, secrets, audit-sensitive records, copyrighted materials, and compliance-aware system design. This document does not provide legal advice or certify compliance, but requires sensitive-data and regulatory context to be identified and handled intentionally.
 
+### [Agentic Development Standards](agentic-development.md)
+
+Defines governance for AI and agentic engineering actors operating under delegated authority, including bounded autonomous and semi-autonomous workflows, role and authority boundaries, repository and tool access, review and validation, escalation, security, auditability, and traceability.
+
 ### [Approved Libraries and Dependencies](approved-libraries.md)
 
 Defines how third-party dependencies are evaluated, approved, restricted, reviewed, and retired.
