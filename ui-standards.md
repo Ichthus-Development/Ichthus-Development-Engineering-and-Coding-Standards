@@ -2,6 +2,8 @@
 
 Accessibility complements these standards but remains an independent engineering responsibility. See [Accessibility Standards](accessibility.md).
 
+Brand color and theme implementation are defined in [Branding and Visual Identity Standards](branding-and-visual-identity.md).
+
 ## UI Control Naming Conventions (WinForms Only)
 
 For Windows Forms applications, Ichthus Development adopts explicit control-prefix naming conventions.
