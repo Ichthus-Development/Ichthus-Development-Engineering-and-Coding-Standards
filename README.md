@@ -115,6 +115,10 @@ Defines how third-party dependencies are evaluated, approved, restricted, review
 
 Defines UI separation and framework-specific conventions, including WinForms control naming.
 
+### [Branding and Visual Identity Standards](branding-and-visual-identity.md)
+
+Defines the canonical Ichthus Development color palette, semantic theme resources, derived-color guidance, and accessibility-aware brand implementation.
+
 ### [Accessibility Standards](accessibility.md)
 
 Establishes the scope and planned structure for accessibility requirements as an engineering responsibility independent of any particular UI framework.
