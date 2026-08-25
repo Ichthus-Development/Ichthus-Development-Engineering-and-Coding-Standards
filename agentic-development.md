@@ -29,11 +29,14 @@ The following requirements apply across this document family:
 - Deterministic enforcement SHOULD be preferred over prompt-only instruction when a requirement can be enforced reliably by permissions, policy engines, branch protection, sandboxing, CI, static analysis, schemas, or other mechanical controls.
 - Material actions, decisions, approvals, exceptions, and validation results MUST be traceable at a level proportionate to their impact.
 - Model context MUST NOT be treated as the authoritative project record. Material state and decisions MUST survive context loss in durable project artifacts or systems of record.
+- Agent executions SHOULD receive minimum-sufficient authoritative context for the responsibility being performed rather than accumulated conversational history merely because it is available.
+- Model context and inference MUST be treated as engineering resource consumption subject to the repository's [Resource Efficiency](principles.md#resource-efficiency) standards.
+- Optimization of tokens, context size, inference time, model cost, or workflow speed MUST NOT sacrifice correctness, security, maintainability, validation quality, usability, or information materially necessary to perform the assigned responsibility.
 - Autonomous retry, correction, and recovery loops MUST be bounded by count, time, cost, scope, or another explicit limit appropriate to the workflow.
 - Human overrides and exceptions MUST be explicit, attributable, and recorded with the accepted risk or rationale.
 - Human intervention SHOULD occur at meaningful decision boundaries rather than serving as the routine message bus or routing mechanism for otherwise authorized work.
 
-These requirements extend the repository-wide principles of explicit design, conscious deviations, enforceability, and tooling alignment defined in [Engineering Principles](principles.md).
+These requirements extend the repository-wide principles of explicit design, proportional resource use, consumer-oriented simplicity, conscious deviations, enforceability, and tooling alignment defined in [Engineering Principles](principles.md).
 
 ## 3. Terminology
 
@@ -47,6 +50,10 @@ For this document family:
 - **Material action** — An action whose effect, risk, cost, irreversibility, security impact, production impact, or governance significance warrants durable traceability or review.
 - **Deterministic validation** — Validation performed by reproducible tooling such as compilers, tests, analyzers, linters, migration validators, or policy checks rather than by model assertion alone.
 - **Execution** — A specific agent run or bounded activity operating under a defined role, task, workspace, and policy context.
+- **Efficiency** — Achieving the needed result while avoiding unnecessary consumption of context, inference, compute, network, storage, human attention, or other resources.
+- **Expediency** — Reducing unnecessary delay between a need, result, handoff, decision, or response.
+- **Effectiveness** — Producing a correct, useful, maintainable, safe, and fit-for-purpose engineering result.
+- **Minimum-sufficient context** — The smallest authoritative context reasonably sufficient for an execution to perform its assigned responsibility correctly without material ambiguity or avoidable rediscovery.
 
 Implementations MAY use different names when their meaning and authority boundaries remain equivalent.
 
@@ -93,7 +100,31 @@ Repeated failure MUST NOT continue indefinitely. Retry and correction limits MUS
 
 See [Task Lifecycle and Escalation](agentic-development/task-lifecycle-and-escalation.md).
 
-## 6. Deterministic Enforcement and Agent Judgment
+## 6. Resource, Context, and Outcome Priorities
+
+Efficiency, expediency, and effectiveness SHOULD be balanced according to the responsibility being performed. None SHOULD be optimized in isolation.
+
+Machine-to-machine handoffs often benefit from efficiency through concise semantics, structured state, and stable references. Engineering execution generally prioritizes effectiveness because a fast or inexpensive incorrect result does not satisfy the engineering objective. Human-facing results and escalations often benefit from expediency because the consumer should be able to identify the material outcome or requested decision quickly.
+
+These are design tendencies rather than fixed ordering rules. A shorter handoff that omits a necessary contract is not efficient overall; a faster implementation that creates fragility is not expedient in any meaningful project sense; and an exhaustive report that obscures the decision in transcript-level detail may reduce effectiveness for its consumer.
+
+Agentic workflows SHOULD optimize for proportional total resource expenditure required to reach a correct outcome rather than minimum input tokens, minimum model cost, or minimum elapsed time in isolation.
+
+Model usage consumes resources regardless of deployment model. Depending on implementation, relevant costs MAY include:
+
+- Input context and output volume
+- Inference duration and hosted usage cost
+- CPU, GPU, memory, or VRAM utilization
+- Electrical power and thermal load
+- Network use
+- Throughput and concurrency capacity
+- Human review, interruption, and decision attention
+
+Measurement and telemetry SHOULD be proportionate to operational value. This standard does not require exhaustive per-execution accounting when the information would not materially improve engineering or operational decisions.
+
+See [Task Lifecycle and Escalation](agentic-development/task-lifecycle-and-escalation.md) for minimum-sufficient context, handoffs, and consumer-oriented communication.
+
+## 7. Deterministic Enforcement and Agent Judgment
 
 Agent reasoning MAY design, interpret, prioritize, explain, and investigate work, but it MUST NOT substitute a textual claim for deterministic validation that is available and required.
 
@@ -105,7 +136,7 @@ Mechanical enforcement does not eliminate engineering judgment. When determinist
 
 See [Review and Validation](agentic-development/review-and-validation.md).
 
-## 7. Relationship to Existing Standards
+## 8. Relationship to Existing Standards
 
 This family applies alongside the rest of the Ichthus Development standards:
 
@@ -116,12 +147,12 @@ This family applies alongside the rest of the Ichthus Development standards:
 
 A project MUST NOT use agentic implementation as justification to weaken an existing engineering or compliance requirement.
 
-## 8. Document Family
+## 9. Document Family
 
 This standard is organized as a document family. This root document defines shared scope, principles, terminology, authority concepts, and navigation. Each companion document owns the detailed rules for a distinct responsibility:
 
 - [Roles and Authority](agentic-development/roles-and-authority.md) — logical roles, delegated authority, separation of duties, and human authority boundaries.
-- [Task Lifecycle and Escalation](agentic-development/task-lifecycle-and-escalation.md) — task state, handoffs, bounded retries, escalation, approval, and human decision boundaries.
+- [Task Lifecycle and Escalation](agentic-development/task-lifecycle-and-escalation.md) — task state, context assembly, handoffs, bounded retries, escalation, approval, completion reporting, and human decision boundaries.
 - [Repository and Workspace Standards](agentic-development/repository-and-workspace.md) — isolated work, concurrency, repository history, branches, worktrees, and protected change paths.
 - [Tools, Dependencies, and Research](agentic-development/tools-dependencies-and-research.md) — tool requests, dependency discovery, research evidence, approval routing, catalogs, and provisioning boundaries.
 - [Review and Validation](agentic-development/review-and-validation.md) — independent review, deterministic verification, test evidence, and truthful validation reporting.
@@ -130,7 +161,7 @@ This standard is organized as a document family. This root document defines shar
 
 Companion documents use local section numbering. Their numbers describe structure within that document and do not represent sections of a reconstructed monolithic standard.
 
-## 9. Non-Goals
+## 10. Non-Goals
 
 This family does not attempt to:
 
@@ -138,6 +169,8 @@ This family does not attempt to:
 - Require every logical role to be implemented by a separate model or agent instance
 - Replace project management, source-control, CI/CD, security, dependency, compliance, or coding standards owned elsewhere
 - Require human approval for routine actions already permitted by explicit delegated policy
+- Require humans to communicate through machine-oriented schemas
+- Require retention of full prompts, private reasoning, or complete agent conversations merely for auditability
 - Treat agent output as inherently correct, incorrect, malicious, or trustworthy
 - Define a complete autonomous-development organization in this first version
 

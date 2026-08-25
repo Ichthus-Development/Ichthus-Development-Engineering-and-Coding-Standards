@@ -46,7 +46,7 @@ Traceability SHOULD preserve, when applicable:
 - Repository or environment outcome
 - Time and ordering information sufficient to reconstruct material workflow state
 
-Auditability MUST NOT become an excuse to collect full prompts, secrets, sensitive payloads, or unlimited transcripts when structured metadata can satisfy the traceability requirement.
+Auditability MUST NOT become an excuse to collect full prompts, secrets, sensitive payloads, private reasoning, or unlimited transcripts when structured metadata and durable outcomes can satisfy the traceability requirement.
 
 ## 4. Durable Project Record
 
@@ -54,9 +54,15 @@ Model context MUST NOT be treated as the authoritative project record.
 
 Material requirements, decisions, approvals, research findings, review results, validation results, and unresolved risks SHOULD be stored in durable project systems or artifacts appropriate to their purpose.
 
+An execution SHOULD be able to derive the authoritative current state necessary for its assigned responsibility from durable project records and resolvable references without requiring a prior execution's complete conversation.
+
+Agent-to-agent workflow records SHOULD preserve durable outcomes, evidence, and decisions rather than conversational history when those outcomes are sufficient to continue the work correctly.
+
 A durable record SHOULD remain understandable without requiring access to the full conversational transcript that produced it.
 
 When a decision changes, the project record SHOULD preserve enough history to identify the superseded decision and the authority for the change.
+
+Detailed execution records MAY contain more information than normal human-facing completion or escalation summaries. Reporting SHOULD reference authoritative records rather than duplicate them when reliable retrieval is available.
 
 ## 5. Policy and Governance Context
 
