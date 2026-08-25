@@ -33,6 +33,11 @@ These principles override tooling trends, framework fashion, and external style 
 
    Idle software should be substantially idle.
 
+8. **Complexity belongs behind appropriate boundaries**  
+   Necessary complexity SHOULD be handled by the layer best equipped to manage it rather than unnecessarily imposed on its consumers.
+
+   Simplicity MUST NOT be manufactured by omitting correctness, validation, diagnostics, security, accessibility, maintainability, or other necessary engineering responsibilities.
+
 These standards are informed by the principles articulated in the Gold Fish Bowl Babbagic Code.
 
 ## Terminology and Rule Severity
@@ -54,7 +59,7 @@ For the purposes of this document, "public API" refers to any type, member, sche
 
 ## Resource Efficiency
 
-Ichthus Development software MUST NOT become bloatware. Features do not justify unnecessary or disproportionate consumption of CPU time, memory, storage, network bandwidth, battery power, startup time, or background processes.
+Ichthus Development software MUST NOT become bloatware. Features do not justify unnecessary or disproportionate consumption of CPU time, memory, storage, network bandwidth, battery power, startup time, background processes, or human attention created by the system's design.
 
 Resource use MUST be proportional to the value currently being delivered. This standard applies to all Ichthus Development software and applies especially to long-running agents, services, tray applications, schedulers, daemons, background processors, and client software that remains resident for extended periods.
 
@@ -116,9 +121,20 @@ Frameworks and dependencies MUST be proportionate to the problem they solve.
 Resource-conscious design MUST NOT devolve into premature micro-optimization.
 
 - Engineering effort SHOULD focus on measured, observed, or reasonably foreseeable costs that materially affect users, systems, operations, or scalability.
-- Maintainability, clarity, correctness, accessibility, security, and diagnostics MUST NOT be sacrificed for negligible resource savings.
+- Maintainability, clarity, correctness, accessibility, security, diagnostics, and usability MUST NOT be sacrificed for negligible resource savings.
+- Optimization SHOULD consider total cost to a correct outcome, including failures, retries, rework, operational burden, and human effort rather than optimizing one visible metric in isolation.
 - Simpler implementation SHOULD be preferred when competing approaches have no material resource difference.
 - Optimization that adds complexity SHOULD be supported by measurement, a documented constraint, or a clear operational requirement.
+
+## Consumer-Oriented Simplicity
+
+Interfaces, APIs, workflows, diagnostics, and operational controls SHOULD be designed around the needs and responsibilities of their consumers.
+
+Internal implementation complexity MAY be justified when it materially reduces unnecessary complexity at a public, user, operator, or integration boundary while preserving correctness, observability, maintainability, and appropriate control.
+
+A smaller implementation is not necessarily a simpler system. Fewer lines of code, fewer components, fewer configuration values, or fewer visible steps MUST NOT be treated as sufficient evidence that complexity has been reduced when equivalent or greater complexity has merely been transferred to callers, users, operators, support staff, or downstream systems.
+
+Necessary design, validation, error handling, diagnostics, security, accessibility, maintainability, and workflow control MUST NOT be omitted merely to make an implementation appear simpler.
 
 ## Data Access and Object Design
 
