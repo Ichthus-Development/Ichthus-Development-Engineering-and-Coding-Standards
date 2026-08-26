@@ -38,6 +38,11 @@ These principles override tooling trends, framework fashion, and external style 
 
    Simplicity MUST NOT be manufactured by omitting correctness, validation, diagnostics, security, accessibility, maintainability, or other necessary engineering responsibilities.
 
+9. **Evidence over status or consensus**  
+   Material engineering conclusions SHOULD be justified by evidence, reproducibility, applicable requirements, and technical merit rather than authority, popularity, reputation, or vote count alone.
+
+   Agreement is useful information, but consensus MUST NOT substitute for validation when correctness, safety, security, or other material risk requires independent evidence.
+
 These standards are informed by the principles articulated in the Gold Fish Bowl Babbagic Code.
 
 ## Terminology and Rule Severity
@@ -135,6 +140,8 @@ Internal implementation complexity MAY be justified when it materially reduces u
 A smaller implementation is not necessarily a simpler system. Fewer lines of code, fewer components, fewer configuration values, or fewer visible steps MUST NOT be treated as sufficient evidence that complexity has been reduced when equivalent or greater complexity has merely been transferred to callers, users, operators, support staff, or downstream systems.
 
 Necessary design, validation, error handling, diagnostics, security, accessibility, maintainability, and workflow control MUST NOT be omitted merely to make an implementation appear simpler.
+
+Refactoring SHOULD serve a concrete engineering purpose such as correctness, security, maintainability, testability, architectural clarity, reduced coupling, removal of meaningful duplication, or a demonstrated performance or operational need. Refactoring SHOULD NOT be required solely because another implementation is aesthetically preferred, fashionable, or merely possible.
 
 ## Data Access and Object Design
 

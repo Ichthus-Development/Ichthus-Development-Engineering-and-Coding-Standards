@@ -2,7 +2,7 @@
 
 *Companion document in the Agentic Development Standards family*
 
-This document defines task state, context assembly, durable handoffs, bounded retries, escalation, approval, completion reporting, and human decision boundaries. It is authoritative for the detailed rules in its scope.
+This document defines task state, context assembly, durable handoffs, finding lifecycle, bounded retries, escalation, approval, completion reporting, and human decision boundaries. It is authoritative for the detailed rules in its scope.
 
 ## 1. Task Definition and State
 
@@ -46,9 +46,11 @@ Over-compression that causes material ambiguity, repeated rediscovery, avoidable
 
 A context-building mechanism MAY be an orchestrator, retrieval system, deterministic service, agent, human, or another component appropriate to the workflow. The mechanism SHOULD select context according to the receiving responsibility rather than accumulate information indiscriminately.
 
-Where authoritative durable material already exists, context and handoffs SHOULD prefer stable references to unnecessary duplication when the receiving execution can resolve those references reliably. References MAY identify standards, policy versions, architecture decisions, task records, API or schema contracts, repository revisions, validation results, research artifacts, or approval records.
+Where authoritative durable material already exists, context and handoffs SHOULD prefer stable references to unnecessary duplication when the receiving execution can resolve those references reliably. References MAY identify standards, policy versions, architecture decisions, task records, API or schema contracts, repository revisions, validation results, research artifacts, findings, or approval records.
 
 References MUST NOT become opaque shorthand that prevents the receiving execution from obtaining information necessary to perform the task correctly.
+
+Where independent first-pass analysis is required, context assembly SHOULD preserve necessary facts while avoiding unnecessary persuasive conclusions that would materially undermine independence. It MUST NOT omit known material facts, constraints, failures, or authoritative decisions merely to manufacture apparent independence.
 
 ## 3. Workflow Transitions and Handoffs
 
@@ -63,7 +65,7 @@ A handoff SHOULD preserve enough information for the receiving role to understan
 - Work completed or current disposition
 - Evidence produced
 - Applicable standards, policy, or authority references when material
-- Known failures, risks, or uncertainty
+- Known failures, findings, risks, dissent, or uncertainty
 - Decisions already made and their authority
 - The next requested action or required disposition
 
@@ -71,11 +73,32 @@ Machine-facing handoffs generally SHOULD omit greetings, conversational transiti
 
 Semantic completeness MUST NOT be sacrificed for brevity. A structurally compact handoff that omits material requirements or makes its meaning ambiguous is defective regardless of token count.
 
-Implementations MAY define typed artifacts such as `TaskRequest`, `ReviewResult`, `ResearchResult`, `ToolRequest`, `ApprovalRequest`, `Escalation`, or `ValidationResult`. These names are illustrative; durable semantics matter more than the specific schema.
+Implementations MAY define typed artifacts such as `TaskRequest`, `ReviewResult`, `ResearchResult`, `SecurityFinding`, `ChallengeResult`, `ToolRequest`, `ApprovalRequest`, `Escalation`, or `ValidationResult`. These names are illustrative; durable semantics matter more than the specific schema.
 
 Agent-to-agent communication SHOULD pass durable outcomes and evidence rather than conversational history wherever practical.
 
-## 4. Consumer-Oriented Communication
+## 4. Finding and Remediation Lifecycle
+
+Material security, safety, compliance, validation, review, or independent-challenge findings SHOULD enter a durable workflow rather than being silently repaired and forgotten.
+
+A finding record SHOULD preserve enough information to understand, as applicable:
+
+- The issue or challenged assumption
+- Affected scope, artifact, revision, environment, or contract
+- Evidence or reproducible conditions
+- Severity, risk, uncertainty, or material consequence
+- Responsible disposition or remediation owner
+- Remediation or decision
+- Required review or retest
+- Final verification and closure, acceptance, escalation, or other disposition
+
+An agent that discovers a material finding MAY assist with remediation when authorized, but the finding MUST NOT be erased or treated as independently validated merely because the discovering execution also changed the implementation.
+
+Where independent verification is appropriate, closure SHOULD require a reviewer, security retest, deterministic validation, human decision, or another validation path sufficiently independent from the remediation itself.
+
+A security finding that demonstrates a reproducible material weakness SHOULD remain open, explicitly accepted, or otherwise dispositioned by authorized policy. Majority agreement that the implementation is acceptable MUST NOT silently close the finding.
+
+## 5. Consumer-Oriented Communication
 
 Workflow output SHOULD be designed for the responsibility and needs of its consumer.
 
@@ -100,50 +123,63 @@ A human SHOULD NOT be required to reconstruct lengthy internal agent conversatio
 
 Human-facing summaries MAY omit intermediate workflow detail that is not relevant to the decision while preserving links or references to authoritative evidence and detailed records when needed.
 
-System complexity SHOULD be absorbed by the workflow layer best able to manage it rather than pushed outward to each agent or human consumer. An orchestrated workflow MAY perform substantial internal routing, retrieval, research, validation, and review while presenting a human with one concise actionable decision package.
+System complexity SHOULD be absorbed by the workflow layer best able to manage it rather than pushed outward to each agent or human consumer. An orchestrated workflow MAY perform substantial internal routing, retrieval, research, validation, security testing, challenge, and review while presenting a human with one concise actionable decision package.
 
-## 5. Routine Resolution and Human Boundaries
+## 6. Routine Resolution and Human Boundaries
 
 Agents SHOULD resolve routine problems within delegated authority without requiring a human to relay messages between roles.
 
-A human SHOULD be involved when accountable judgment, new authority, exception acceptance, material risk acceptance, or another reserved decision is actually required.
+A human SHOULD be involved when accountable judgment, new authority, exception acceptance, material risk acceptance, unresolved material disagreement, or another reserved decision is actually required.
 
 Workflow design SHOULD distinguish notification from approval. Keeping a human informed MUST NOT be treated as equivalent to obtaining required authorization.
 
 Human attention is a constrained workflow resource. Agentic systems SHOULD reduce unnecessary interruption, status-chasing, and routine supervision while preserving human authority at meaningful decision boundaries.
 
-A safe workflow SHOULD NOT require a human to continuously observe routine agent activity merely to detect whether policy is being followed. Material exceptions, failures, and reserved decisions SHOULD be surfaced explicitly.
+A safe workflow SHOULD NOT require a human to continuously observe routine agent activity merely to detect whether policy is being followed. Material exceptions, failures, findings, unresolved dissent, and reserved decisions SHOULD be surfaced explicitly.
 
-## 6. Escalation
+## 7. Escalation and Competing Conclusions
 
 An agent MUST escalate rather than circumvent policy when completion requires unavailable authority or an explicitly reserved decision.
 
 An escalation SHOULD contain:
 
-- What is blocked
-- Why the current role cannot resolve it autonomously
+- What is blocked or requires decision
+- Why the current role or workflow cannot resolve it autonomously
 - Relevant evidence and uncertainty
+- Material competing conclusions, minority findings, independent challenge, or security findings when applicable
 - Available options and consequences
 - A recommendation when appropriate
 - The exact approval, authority, information, or decision requested
 
 Escalations SHOULD be concise enough to support efficient decisions without omitting material risk or evidence.
 
-If an authorized decision rejects the requested action, the agent MUST follow the rejection, revise the approach within existing authority, or terminate the affected work. It MUST NOT repeatedly reframe the same request merely to obtain a different answer unless materially new evidence exists.
+When material disagreement remains after appropriate independent analysis and collaborative resolution, the human or authorized decision-maker SHOULD receive the disagreement as a decision package rather than a transcript dump.
 
-## 7. Bounded Retry and Recovery
+A coordinator or reporting layer SHOULD preserve the substance of competing material conclusions and MUST NOT hide a material dissenting or security finding merely because the prevailing recommendation has more supporting agents.
 
-Autonomous retry, repair, and correction loops MUST be bounded.
+## 8. Rejection, Approval Shopping, and Reopened Questions
 
-Bounds MAY be defined by attempt count, elapsed time, cost, resource consumption, changed scope, repeated failure signature, or another enforceable condition appropriate to the task.
+If an authorized decision rejects a requested action, the agent MUST follow the rejection, revise the approach within existing authority, or terminate the affected work.
 
-Repeated failures SHOULD preserve diagnostic evidence and avoid destructive repetition. When the bound is reached, the workflow MUST enter a defined failure, escalation, or safe-termination state.
+An agent MUST NOT repeatedly reframe, reroute, selectively summarize, or shop the same request among other roles or decision-makers merely to obtain a different answer unless materially new evidence, changed scope, or changed authority exists.
 
-A retry MUST NOT silently weaken tests, security controls, validation criteria, or acceptance requirements to manufacture success.
+A role MUST NOT omit known material counterevidence, prior rejection rationale, or unresolved findings when resubmitting a materially similar request.
+
+Repeatedly reopening a resolved review, challenge, dependency, architecture, or security question without materially new evidence SHOULD be prohibited by workflow policy when practical. Reopening MAY occur when new evidence, changed requirements, changed risk, or a changed authoritative decision justifies reconsideration.
+
+## 9. Bounded Retry and Recovery
+
+Autonomous retry, repair, correction, review, and challenge loops MUST be bounded.
+
+Bounds MAY be defined by attempt count, elapsed time, cost, resource consumption, changed scope, repeated failure signature, repeated finding, or another enforceable condition appropriate to the task.
+
+Repeated failures SHOULD preserve diagnostic evidence and avoid destructive repetition. When the bound is reached, the workflow MUST enter a defined failure, escalation, decision, or safe-termination state.
+
+A retry MUST NOT silently weaken tests, security controls, validation criteria, challenge criteria, or acceptance requirements to manufacture success.
 
 Repeated rediscovery of authoritative information that could be retained or retrieved through durable task state SHOULD be treated as workflow inefficiency and corrected when material.
 
-## 8. Completion and Reporting
+## 10. Completion and Reporting
 
 A completion or result artifact SHOULD make it possible for its consumer to determine quickly:
 
@@ -152,9 +188,10 @@ A completion or result artifact SHOULD make it possible for its consumer to dete
 - Whether acceptance criteria were satisfied
 - Which deterministic checks actually ran and their results
 - Which relevant checks failed, were unavailable, or were skipped
+- Material security findings, independent challenges, minority findings, or unresolved dissent and their dispositions when applicable
 - Material unresolved risks, uncertainty, or follow-up work
 - Whether further human action is required
-- Where authoritative artifacts, revisions, evidence, or records can be found
+- Where authoritative artifacts, revisions, evidence, findings, or records can be found
 
 Completion reporting MUST distinguish actual validation from inference or expectation.
 
@@ -162,9 +199,9 @@ Execution information and reporting information need not be identical. Detailed 
 
 Agents SHOULD NOT reproduce every intermediate step, prompt, discussion, or reasoning trace merely because it exists.
 
-## 9. Approval and Exception Records
+## 11. Approval and Exception Records
 
-Required approvals MUST be attributable to an authorized decision-maker and associated with the affected task, action, or exception.
+Required approvals MUST be attributable to an authorized decision-maker and associated with the affected task, action, finding, or exception.
 
 Approval scope SHOULD be explicit enough to prevent an approval for one action from being reused as blanket authority for unrelated actions.
 
