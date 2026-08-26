@@ -33,6 +33,8 @@ Projects MUST identify applicable legal, regulatory, contractual, security, priv
 
 Engineering documentation MUST distinguish confirmed requirements from assumptions, recommendations, and unresolved questions.
 
+Authoritative-source references and short applicability briefs for commonly encountered regulatory, statutory, standards, and contractual contexts are maintained in [Regulatory and Contractual Context](compliance-and-sensitive-data/regulatory-and-contractual-context.md). Those references support research and traceability; their inclusion does not declare that a source applies to every project.
+
 ## 3. Core Baseline Requirements
 
 The following requirements apply across this document family:
@@ -60,7 +62,7 @@ This standard is organized as a document family. This root document defines shar
 - [Third-Party Data Exchange Standards](compliance-and-sensitive-data/third-party-data-exchange.md) — transmission, integrations, external processors and recipients, and completeness-versus-minimization boundaries.
 - [Sensitive-Data Access, Audit, and Operations Standards](compliance-and-sensitive-data/access-audit-and-operations.md) — logging and diagnostics, authorization, tenant isolation, privileged and bulk access, auditability, and incident awareness.
 - [Sensitive-Data Storage, Retention, and Disposal Standards](compliance-and-sensitive-data/retention-and-disposal.md) — persistence, backups, restoration, retention, and secure disposal.
-- [Regulatory and Contractual Context](compliance-and-sensitive-data/regulatory-and-contractual-context.md) — regulatory sources, agreements, licensing, copyright, and other external obligations that shape engineering decisions.
+- [Regulatory and Contractual Context](compliance-and-sensitive-data/regulatory-and-contractual-context.md) — regulatory sources, authoritative references, applicability briefs, agreements, licensing, copyright, and other external obligations that shape engineering decisions.
 
 Companion documents use local section numbering. Their numbers describe structure within that document and do not represent sections of a reconstructed monolithic standard.
 
@@ -71,6 +73,8 @@ Before building or materially modifying a system, the project team should be abl
 - What sensitive, confidential, regulated, licensed, or audit-sensitive information is involved?
 - Why is each category of data necessary?
 - What legal, regulatory, contractual, security, privacy, records-management, and business obligations have been identified?
+- What authoritative source, controlling agreement, standard revision, or approved interpretation establishes each material obligation?
+- Who is authorized to determine whether each identified external authority applies to the project?
 - Who is authorized to provide, access, change, export, and delete the data?
 - Where does the data enter, flow, persist, replicate, appear, and leave the system?
 - Which third parties, processors, subprocessors, intermediaries, and downstream recipients can receive or access it?
@@ -112,4 +116,3 @@ When requirements overlap, the more specific documented requirement applies, but
 *Ichthus Development Engineering and Coding Standards exist to serve understanding, not fashion.*
 
 © Gold Fish Bowl, LLC, DBA Ichthus Development
-
