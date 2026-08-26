@@ -35,6 +35,9 @@ The following requirements apply across this document family:
 - Autonomous retry, correction, and recovery loops MUST be bounded by count, time, cost, scope, or another explicit limit appropriate to the workflow.
 - Human overrides and exceptions MUST be explicit, attributable, and recorded with the accepted risk or rationale.
 - Human intervention SHOULD occur at meaningful decision boundaries rather than serving as the routine message bus or routing mechanism for otherwise authorized work.
+- Agent consensus MUST NOT automatically be treated as independent corroboration. Where independence materially affects confidence, the workflow SHOULD preserve an analysis path capable of forming a separate judgment from the underlying evidence.
+- Adversarial security review and independent challenge SHOULD be applied in proportion to risk, uncertainty, irreversibility, and impact. Their purpose is to improve confidence, not to manufacture findings, disagreement, redesign, or refactoring.
+- Findings and recommendations SHOULD be evaluated by evidence, reproducibility, applicable requirements, and technical merit rather than model size, agent reputation, role prestige, prior success, or majority agreement alone.
 
 These requirements extend the repository-wide principles of explicit design, proportional resource use, consumer-oriented simplicity, conscious deviations, enforceability, and tooling alignment defined in [Engineering Principles](principles.md).
 
@@ -54,6 +57,8 @@ For this document family:
 - **Expediency** — Reducing unnecessary delay between a need, result, handoff, decision, or response.
 - **Effectiveness** — Producing a correct, useful, maintainable, safe, and fit-for-purpose engineering result.
 - **Minimum-sufficient context** — The smallest authoritative context reasonably sufficient for an execution to perform its assigned responsibility correctly without material ambiguity or avoidable rediscovery.
+- **Independent challenge** — A bounded review responsibility that evaluates whether a prevailing conclusion, framing, or shared assumption has a credible evidence-based reason to be reconsidered. It does not require disagreement.
+- **Adversarial security testing** — Authorized security evaluation that attempts to identify exploitable behavior, trust-boundary failures, or abuse paths within explicitly permitted scope and environment boundaries.
 
 Implementations MAY use different names when their meaning and authority boundaries remain equivalent.
 
@@ -155,9 +160,9 @@ This standard is organized as a document family. This root document defines shar
 - [Task Lifecycle and Escalation](agentic-development/task-lifecycle-and-escalation.md) — task state, context assembly, handoffs, bounded retries, escalation, approval, completion reporting, and human decision boundaries.
 - [Repository and Workspace Standards](agentic-development/repository-and-workspace.md) — isolated work, concurrency, repository history, branches, worktrees, and protected change paths.
 - [Tools, Dependencies, and Research](agentic-development/tools-dependencies-and-research.md) — tool requests, dependency discovery, research evidence, approval routing, catalogs, and provisioning boundaries.
-- [Review and Validation](agentic-development/review-and-validation.md) — independent review, deterministic verification, test evidence, and truthful validation reporting.
-- [Agent Security and Secrets](agentic-development/security-and-secrets.md) — least-privilege agent access, credential exposure, environment boundaries, untrusted external content, and privilege escalation.
-- [Audit, Identity, and Traceability](agentic-development/audit-identity-and-traceability.md) — execution identity, attributable material actions, policy context, durable records, and audit semantics.
+- [Review and Validation](agentic-development/review-and-validation.md) — independent review, deterministic verification, independent challenge, correlated-failure guardrails, pre-production challenge, test evidence, and truthful validation reporting.
+- [Agent Security and Secrets](agentic-development/security-and-secrets.md) — least-privilege agent access, credential exposure, environment boundaries, adversarial security-testing authority, untrusted external content, and privilege escalation.
+- [Audit, Identity, and Traceability](agentic-development/audit-identity-and-traceability.md) — execution identity, attributable material actions, policy context, durable findings and dissent, durable records, and audit semantics.
 
 Companion documents use local section numbering. Their numbers describe structure within that document and do not represent sections of a reconstructed monolithic standard.
 
