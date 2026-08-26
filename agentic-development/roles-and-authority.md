@@ -18,6 +18,7 @@ Common roles include:
 - **Reviewer** — independently evaluates changes, evidence, risks, conformance, and unresolved defects.
 - **Research** — gathers and evaluates external or project evidence needed for a technical decision.
 - **Testing / Validation** — executes or designs validation appropriate to the change and reports actual results.
+- **End-User Simulation / Usability Challenge** — exercises user-facing workflows from the perspective of plausible users who do not share the development team's implementation knowledge or assumptions, with emphasis on discoverability, unexpected-but-reasonable behavior, and user-facing failure modes. See [End-User Simulation and Usability](user-simulation-and-usability.md).
 - **Adversarial Security Testing** — attempts to identify exploitable behavior, trust-boundary failures, unsafe hostile-input handling, or other security weaknesses within explicitly authorized scope and environments.
 - **Independent Challenge** — evaluates whether a prevailing conclusion, framing, design choice, or shared assumption has a credible evidence-based reason to be reconsidered. This role is not required to disagree.
 - **Provisioning / Environment Management** — performs approved changes to tools, environments, infrastructure, or privileged configuration.
