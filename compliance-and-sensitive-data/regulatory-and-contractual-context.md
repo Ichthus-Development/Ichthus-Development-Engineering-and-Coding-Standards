@@ -20,7 +20,9 @@ Confidentiality and copyright are distinct. Permission to access a work does not
 
 The following contexts may affect engineering decisions. This list is neither exhaustive nor a determination that a particular authority applies.
 
-### 2.1 Applicability and Source Identification
+The briefs in this section exist to help engineers and agentic workflows recognize when a source may warrant investigation. They are orientation aids, not substitutes for the controlling statute, regulation, contract, standard, authoritative guidance, or qualified interpretation.
+
+### 2.1 Applicability, Authority, and Source Identification
 
 Projects MUST identify which jurisdictions, entities, people, records, transactions, contracts, and environments bring a particular source into scope. Similar acronyms or subject matter do not establish applicability.
 
@@ -28,14 +30,34 @@ For every applicable source, documentation SHOULD identify:
 
 - The full name and commonly used abbreviation
 - The governing jurisdiction, organization, client, or contracting parties
+- An authoritative source or controlling reference when one is publicly available
 - The applicable version, effective date, contract date, or revision
 - The responsible legal, compliance, security, privacy, contractual, or business authority
 - The engineering requirements derived from that source
 - Any unresolved interpretation or applicability question
 
+Authoritative sources SHOULD be preferred over summaries, blogs, vendor checklists, search snippets, model memory, or other secondary explanations when determining applicability or deriving material requirements.
+
+Source type SHOULD be distinguished where it affects authority. Examples include:
+
+- **Statute or regulation** — enacted or promulgated legal authority.
+- **Regulator or agency guidance** — official explanatory or enforcement material that may aid interpretation but does not necessarily have the same force as the controlling law or regulation.
+- **External standard or framework** — a specification published by an authoritative standards body that may become mandatory through law, regulation, contract, policy, client direction, certification scope, or explicit project adoption.
+- **Contractual source** — the executed agreement, amendment, addendum, statement of work, or other controlling instrument applicable to the parties.
+
+A public link establishes provenance; it does not establish project applicability. The existence of an authoritative source MUST NOT be interpreted as a declaration that every project is governed by that source.
+
 ### 2.2 HIPAA and HITECH
 
-The **Health Insurance Portability and Accountability Act (HIPAA)** and **Health Information Technology for Economic and Clinical Health Act (HITECH)** may affect covered entities, business associates, and systems that create, receive, maintain, or transmit PHI or electronic PHI.
+**Brief:** The **Health Insurance Portability and Accountability Act (HIPAA)** and the HIPAA Privacy, Security, Breach Notification, and related Administrative Simplification Rules apply to defined covered entities and, for applicable provisions, business associates. The **Health Information Technology for Economic and Clinical Health Act (HITECH)** strengthened and expanded portions of the HIPAA privacy and security framework, including direct obligations for certain business associates. Health-related data is not automatically PHI merely because it concerns health.
+
+**Authoritative sources:**
+
+- [HHS Office for Civil Rights — HIPAA for Professionals](https://www.hhs.gov/hipaa/for-professionals/index.html)
+- [HHS Office for Civil Rights — Covered Entities and Business Associates](https://www.hhs.gov/hipaa/for-professionals/covered-entities/index.html)
+- [HHS Office for Civil Rights — HIPAA Security Rule](https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html)
+- [Electronic Code of Federal Regulations — 45 CFR Part 160](https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-160)
+- [Electronic Code of Federal Regulations — 45 CFR Part 164](https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164)
 
 Engineering decisions may be affected by permitted uses and disclosures, minimum-necessary handling, administrative, physical, and technical safeguards, individual rights, business-associate relationships, auditability, incident handling, breach processes, retention, and data return or destruction.
 
@@ -43,7 +65,12 @@ Health-related information MUST NOT be labeled PHI solely because it concerns he
 
 ### 2.3 Business Associate Agreements (BAAs)
 
-A **Business Associate Agreement (BAA)** is a contractual instrument associated with HIPAA-regulated relationships; it is not a separate statute or general-purpose compliance certificate.
+**Brief:** A **Business Associate Agreement (BAA)** is a contractual instrument used in HIPAA-regulated relationships when the applicable covered-entity/business-associate requirements are met. It defines permitted and required uses and disclosures, safeguards, reporting, subcontractor obligations, termination behavior, and other contractual duties. A BAA is not a general-purpose certification that a product or organization is “HIPAA compliant.”
+
+**Authoritative sources:**
+
+- [HHS Office for Civil Rights — Covered Entities and Business Associates](https://www.hhs.gov/hipaa/for-professionals/covered-entities/index.html)
+- [HHS — Model Business Associate Agreement](https://www.hhs.gov/sites/default/files/model-business-associate-agreement.pdf)
 
 When a BAA applies, engineering teams MUST identify its permitted and required uses and disclosures, safeguards, incident and breach-reporting duties, subcontractor conditions, access and amendment support, audit or records obligations, termination provisions, and return or destruction requirements.
 
@@ -51,7 +78,12 @@ The actual executed agreement controls the contractual requirements. Sample lang
 
 ### 2.4 Personal Health Information Protection Act (PHIPA)
 
-Ontario's **Personal Health Information Protection Act, 2004 (PHIPA)** may affect health information custodians, agents, service providers, and systems that collect, use, disclose, retain, or dispose of personal health information within its scope.
+**Brief:** Ontario's **Personal Health Information Protection Act, 2004 (PHIPA)** establishes rules for collection, use, disclosure, safeguarding, access, correction, and other handling of personal health information within its scope. It is distinct from HIPAA and has its own definitions, regulated relationships, jurisdiction, and requirements.
+
+**Authoritative sources:**
+
+- [Ontario e-Laws — Personal Health Information Protection Act, 2004](https://www.ontario.ca/laws/statute/04p03)
+- [Information and Privacy Commissioner of Ontario — Health Privacy](https://www.ipc.on.ca/en/resources/information-individuals/your-health-privacy-rights)
 
 Engineering decisions may be affected by consent, authorized collection and use, disclosure restrictions, information practices, safeguards, access and correction, electronic health records, auditability, cross-border or external handling, and breach or notification obligations.
 
@@ -59,7 +91,13 @@ PHIPA and HIPAA MUST NOT be treated as interchangeable. A project may be subject
 
 ### 2.5 General Data Protection Regulation (GDPR)
 
-The **General Data Protection Regulation (GDPR)** may affect processing of personal data connected to the European Union or European Economic Area according to its territorial and material scope.
+**Brief:** The **General Data Protection Regulation (GDPR), Regulation (EU) 2016/679**, governs processing of personal data within its material and territorial scope. It can apply to organizations established in the EU/EEA and, in specified circumstances, organizations outside the EU/EEA that offer goods or services to individuals there or monitor their behavior.
+
+**Authoritative sources:**
+
+- [EUR-Lex — Regulation (EU) 2016/679](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+- [European Commission — Legal Framework of EU Data Protection](https://commission.europa.eu/law/law-topic/data-protection/legal-framework-eu-data-protection_en)
+- [European Commission — Application of the GDPR](https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/application-gdpr_en)
 
 Engineering decisions may be affected by lawful basis, transparency, purpose limitation, data minimization, accuracy, storage limitation, integrity and confidentiality, accountability, individual rights, processor and controller responsibilities, international transfers, privacy by design and default, and incident response.
 
@@ -67,43 +105,78 @@ Geographic hosting location alone MUST NOT be used to determine whether GDPR app
 
 ### 2.6 California Consumer Privacy Act and California Privacy Rights Act (CCPA/CPRA)
 
-The **California Consumer Privacy Act (CCPA), as amended by the California Privacy Rights Act (CPRA)**, may affect businesses, service providers, contractors, third parties, and systems handling personal information or sensitive personal information within its scope.
+**Brief:** The **California Consumer Privacy Act (CCPA), as amended by the California Privacy Rights Act (CPRA)**, establishes privacy rights and obligations involving California consumers and covered businesses, service providers, contractors, and third parties. Applicability depends on statutory definitions, thresholds, relationships, exemptions, and the nature of the processing rather than on the mere presence of California residents in a dataset.
 
-Engineering decisions may be affected by notices, data inventories, consumer requests, access, deletion, correction, opt-out and preference signals, limitations on sensitive-personal-information use, purpose restrictions, service-provider and contractor terms, retention, and verification of requesting parties.
+**Authoritative sources:**
 
-The CPRA amended the CCPA; project documentation SHOULD identify the current controlling text and regulations rather than treating CPRA as an unrelated standalone regime.
+- [California Legislative Information — California Consumer Privacy Act, Civil Code Title 1.81.5](https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?division=3.&chapter=&part=4.&lawCode=CIV&title=1.81.5)
+- [California Privacy Protection Agency — Resources for Businesses](https://cppa.ca.gov/resources.html)
+- [California Privacy Protection Agency — CCPA Regulations](https://cppa.ca.gov/regulations/)
+
+Engineering decisions may be affected by notices, data inventories, consumer requests, access, deletion, correction, opt-out and preference signals, limitations on sensitive-personal-information use, purpose restrictions, service-provider and contractor terms, retention, cybersecurity obligations where applicable, and verification of requesting parties.
+
+The CPRA amended the CCPA; project documentation SHOULD identify the current controlling statutory text and applicable regulations rather than treating CPRA as an unrelated standalone regime.
 
 ### 2.7 Sarbanes-Oxley Act (SOX)
 
-The **Sarbanes-Oxley Act (SOX)** may affect systems supporting financial reporting, books and records, internal controls, change management, record integrity, access, approvals, evidence, and audit processes.
+**Brief:** The **Sarbanes-Oxley Act of 2002 (SOX)** governs aspects of public-company financial reporting, corporate responsibility, auditing, books and records, and internal control. Engineering relevance usually arises when systems, data transformations, reports, access paths, changes, or operational controls materially support in-scope financial reporting or related control evidence.
+
+**Authoritative sources:**
+
+- [U.S. Securities and Exchange Commission — Statutes and Regulations: Sarbanes-Oxley Act](https://www.sec.gov/rules-regulations/statutes-regulations)
+- [U.S. Securities and Exchange Commission — Summary of SEC Actions and Related SOX Provisions](https://www.sec.gov/news/press/2003-89a.htm)
 
 Engineering teams MUST identify which systems, interfaces, reports, transformations, and operational controls are considered in scope by the responsible financial, audit, legal, or compliance authority. A system MUST NOT be labeled “SOX compliant” solely because it has logging or access controls.
 
 ### 2.8 Gramm-Leach-Bliley Act and FTC Safeguards Rule (GLBA)
 
-The **Gramm-Leach-Bliley Act (GLBA)** and **FTC Safeguards Rule** may affect covered financial institutions and systems handling customer information or nonpublic personal information.
+**Brief:** The **Gramm-Leach-Bliley Act (GLBA)** establishes privacy and safeguarding obligations for covered financial institutions, with regulatory and enforcement responsibilities distributed among multiple financial regulators. The **FTC Safeguards Rule, 16 CFR Part 314**, applies to financial institutions subject to FTC jurisdiction and requires an information security program for covered customer information.
 
-Engineering decisions may be affected by security-program requirements, risk assessment, access control, encryption, monitoring, testing, incident response, disposal, service-provider oversight, and protection of customer information.
+**Authoritative sources:**
 
-The responsible authority MUST determine whether the entity and activity fall within the relevant regulator's jurisdiction.
+- [Federal Trade Commission — Gramm-Leach-Bliley Act](https://www.ftc.gov/legal-library/browse/statutes/gramm-leach-bliley-act)
+- [Federal Trade Commission — GLBA Privacy and Security Guidance](https://www.ftc.gov/business-guidance/privacy-security/gramm-leach-bliley-act)
+- [Federal Trade Commission — Safeguards Rule, 16 CFR Part 314](https://www.ftc.gov/legal-library/browse/rules/safeguards-rule)
+
+Engineering decisions may be affected by security-program requirements, risk assessment, access control, encryption, monitoring, testing, incident response, disposal, service-provider oversight, privacy notices, information sharing, and protection of customer information or nonpublic personal information.
+
+The responsible authority MUST determine whether the entity and activity fall within the jurisdiction of the FTC or another applicable financial regulator.
 
 ### 2.9 Foreign Corrupt Practices Act (FCPA)
 
-The **Foreign Corrupt Practices Act (FCPA)** may affect systems supporting books, records, internal accounting controls, approvals, payments, gifts, expenses, third-party relationships, and audit trails.
+**Brief:** The **Foreign Corrupt Practices Act (FCPA)** contains anti-bribery provisions and, for issuers within its accounting provisions, requirements concerning accurate books and records and internal accounting controls. Engineering relevance may arise in systems supporting payments, approvals, expenses, gifts, third-party relationships, financial records, audit trails, and control evidence.
+
+**Authoritative sources:**
+
+- [U.S. Department of Justice — Foreign Corrupt Practices Act Unit](https://www.justice.gov/criminal/criminal-fraud/foreign-corrupt-practices-act)
+- [U.S. Department of Justice — FCPA Statutes](https://www.justice.gov/criminal/criminal-fraud/statutes-regulations)
+- [DOJ and SEC — A Resource Guide to the U.S. Foreign Corrupt Practices Act](https://www.justice.gov/criminal/criminal-fraud/fcpa-resource-guide)
+- [U.S. Department of Justice — Current FCPA Enforcement Guidelines](https://www.justice.gov/criminal/criminal-fraud/foreign-corrupt-practices-act/fcpa-guidelines)
 
 Systems MUST preserve required record accuracy, authorization evidence, and traceability. Engineering teams MUST NOT implement hidden adjustments, undocumented overrides, or data transformations that undermine required books, records, or internal controls.
 
 ### 2.10 Family Educational Rights and Privacy Act (FERPA)
 
-The **Family Educational Rights and Privacy Act (FERPA)** may affect education records and personally identifiable information maintained by covered educational agencies, institutions, or parties acting on their behalf.
+**Brief:** The **Family Educational Rights and Privacy Act (FERPA)** protects defined education records and personally identifiable information maintained by educational agencies and institutions receiving applicable U.S. Department of Education funding. It establishes rights involving access, amendment, and disclosure, subject to statutory and regulatory conditions and exceptions.
 
-Engineering decisions may be affected by access, amendment, disclosure, consent, legitimate-interest limitations, disclosure records, authentication of requesting parties, de-identification, and restrictions on redisclosure.
+**Authoritative sources:**
+
+- [U.S. Department of Education — FERPA](https://studentprivacy.ed.gov/ferpa)
+- [U.S. Department of Education — Protecting Student Privacy](https://studentprivacy.ed.gov/)
+- [Electronic Code of Federal Regulations — 34 CFR Part 99](https://www.ecfr.gov/current/title-34/subtitle-A/part-99)
+
+Engineering decisions may be affected by access, amendment, disclosure, consent, legitimate educational interest, disclosure records, authentication of requesting parties, de-identification, directory information, and restrictions on redisclosure.
 
 Student information MUST NOT be assumed subject to FERPA merely because it is used in an educational context; applicability depends on the institution, record, relationship, and governing authority.
 
 ### 2.11 Payment Card Industry Data Security Standard (PCI DSS)
 
-The **Payment Card Industry Data Security Standard (PCI DSS)** is an industry standard that may apply contractually when payment card data is stored, processed, or transmitted.
+**Brief:** The **Payment Card Industry Data Security Standard (PCI DSS)** is an industry security standard published by the PCI Security Standards Council for environments that store, process, or transmit payment account data within its defined scope. It is not a statute; applicability and validation obligations commonly arise through payment-card ecosystem relationships, contracts, acquiring-bank requirements, card-brand rules, and explicit organizational scope.
+
+**Authoritative sources:**
+
+- [PCI Security Standards Council — PCI DSS](https://www.pcisecuritystandards.org/standards/pci-dss/)
+- [PCI Security Standards Council — Document Library](https://www.pcisecuritystandards.org/document_library/)
 
 PCI DSS may materially affect architecture, scope reduction, segmentation, authentication, access, logging, testing, vulnerability management, cryptography, service-provider selection, and evidence collection.
 
@@ -111,33 +184,56 @@ Payment card data SHOULD be excluded from project scope when an approved externa
 
 ### 2.12 Copyright Act and Intellectual Property Obligations
 
-**Copyright law and applicable licenses** may affect software, fonts, icons, images, documentation, datasets, audiovisual works, models, and other third-party assets.
+**Brief:** U.S. copyright law is principally codified in **Title 17 of the United States Code** and governs rights in protected works including software, documentation, images, audiovisual material, and other creative works. Engineering teams must also account for licenses and contracts that grant, limit, or condition use beyond the baseline statutory rights.
+
+**Authoritative sources:**
+
+- [U.S. Copyright Office — Copyright Law of the United States, Title 17](https://www.copyright.gov/title17/)
+- [U.S. Copyright Office](https://www.copyright.gov/)
 
 Engineering decisions may be affected by copying, modification, distribution, display, derivative works, attribution, license compatibility, deployment, client delivery, and training use. See [Copyright, Licensing, and Third-Party Materials](#1-copyright-licensing-and-third-party-materials).
 
 ### 2.13 Computer Fraud and Abuse Act (CFAA)
 
-The **Computer Fraud and Abuse Act (CFAA)** may matter when engineering activity involves authorization boundaries, access to computers or accounts, security testing, automation, scraping, credential use, or activity beyond granted permission.
+**Brief:** The **Computer Fraud and Abuse Act (CFAA), 18 U.S.C. § 1030**, addresses specified unauthorized access and computer-related conduct. It is particularly relevant when engineering, automation, scraping, credential use, security testing, or research crosses authorization boundaries. Technical reachability is not authorization.
+
+**Authoritative sources:**
+
+- [U.S. Department of Justice — Justice Manual § 9-48.000, Computer Fraud and Abuse Act](https://www.justice.gov/jm/jm-9-48000-computer-fraud)
+- [U.S. House Office of the Law Revision Counsel — 18 U.S.C. § 1030](https://www.govinfo.gov/link/uscode/18/1030)
 
 Technical capability MUST NOT be treated as authorization. Testing, data acquisition, automation, and access to third-party systems MUST have documented permission and scope.
 
 ### 2.14 Computer Security Act and Federal Security Context
 
-The **Computer Security Act of 1987** provides historical context for federal information-security planning, training, and standards.
+**Brief:** The **Computer Security Act of 1987** is historically important to U.S. federal information-security governance and helped establish federal security planning and standards responsibilities. It has been superseded by later federal information-security legislation and SHOULD NOT be treated as the current controlling authority for a modern federal system merely because its name appears in legacy documentation.
+
+**Authoritative sources:**
+
+- [NIST — Cybersecurity Legislation Overview](https://www.nist.gov/system/files/documents/2016/12/02/cybersecurity-commission-report-final-post.pdf)
+- [GovInfo — Public Law 100-235, Computer Security Act of 1987](https://www.govinfo.gov/content/pkg/STATUTE-101/pdf/STATUTE-101-Pg1724.pdf)
 
 Current federal projects may be governed by successor statutes, federal information-security requirements, agency policies, contractual clauses, authorization processes, and adopted standards. The current controlling sources MUST be identified for the specific system rather than inferred from historical terminology.
 
 ### 2.15 NIST Cybersecurity Framework and NIST SP 800-Series
 
-The **NIST Cybersecurity Framework (CSF)** and **NIST Special Publication 800-series** provide risk-management, control, identity, incident, privacy, cryptographic, and system-security guidance.
+**Brief:** The **NIST Cybersecurity Framework (CSF)** and **NIST Special Publication 800-series** provide cybersecurity risk-management, control, identity, incident, privacy, cryptographic, and system-security guidance. Their authority depends on context: some NIST publications are mandatory for particular federal systems or become mandatory through statute, regulation, policy, contract, authorization package, client direction, or explicit organizational adoption; others are advisory guidance.
 
-NIST publications do not automatically become mandatory merely because they are publicly available or widely respected. They may become required through law, regulation, policy, contract, client direction, security authorization, or explicit project adoption.
+**Authoritative sources:**
 
-Projects MUST identify the applicable publication, revision, profile, control baseline, implementation tier, or cited section when NIST guidance is treated as normative.
+- [NIST — Cybersecurity Framework 2.0](https://www.nist.gov/cyberframework)
+- [NIST Computer Security Resource Center — Special Publication 800-Series](https://csrc.nist.gov/publications/sp800)
+- [NIST — Cybersecurity Framework 2.0 Publication](https://doi.org/10.6028/NIST.CSWP.29)
+
+NIST publications do not automatically become mandatory merely because they are publicly available or widely respected.
+
+Projects MUST identify the applicable publication, revision, profile, control baseline, implementation tier, cited section, or adopted requirement when NIST guidance is treated as normative.
 
 ### 2.16 Contractual Data and Information Agreements
 
-Contracts may impose requirements independently of, or in addition to, statutes and external standards. Examples include:
+**Brief:** Contracts can impose technical and operational obligations independently of statutes and external standards. For contractual requirements, the authoritative source is ordinarily the executed agreement and its controlling amendments, addenda, exhibits, statements of work, incorporated policies, or other documents made binding by the parties.
+
+Examples include:
 
 - Information Management Agreements (IMAs)
 - Data Use Agreements (DUAs)
